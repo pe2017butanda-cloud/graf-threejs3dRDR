@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Red Dead Redemption | Atardecer en el Oeste · Escenario 3D</title>
+  <link rel="icon" type="image/svg+xml" href="assets/icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Rubik Dirt: respaldo si todavía no pones la fuente de RDR en assets/fonts/ -->
+  <link href="https://fonts.googleapis.com/css2?family=Rubik+Dirt&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/",
+      "cannon-es": "https://cdn.jsdelivr.net/npm/cannon-es@0.20.0/dist/cannon-es.js"
+    }
+  }
+  </script>
+</head>
+<body>
+
+  <section id="stage" aria-label="Escenario 3D">
+    <div class="hud hud-right">
+      <button id="musicBtn" type="button">♪ Música: sí</button>
+    </div>
+    <div class="vignette"></div>
+
+    <!-- ===== PANTALLA DE INICIO: solo el nombre del juego ===== -->
+    <div id="intro">
+      <div class="title">
+        <span class="t-red">Red Dead</span>
+        <span class="t-main">Redemption</span>
+        <div class="divider" aria-hidden="true"><i></i><b class="star"></b><i></i></div>
+        <span class="t-sub">Atardecer en el Oeste</span>
+      </div>
+      <div class="intro-foot">
+        <div class="bar"><div id="barFill"></div></div>
+        <p id="missing" hidden></p>
+        <button id="startBtn" type="button" disabled>Comenzar</button>
+      </div>
+    </div>
+
+    <!-- ===== MENÚ DE PAUSA (estilo RDR2) ===== -->
+    <div id="pause" role="dialog" aria-label="Menú de pausa">
+      <div class="paint"></div>
+
+      <svg class="watch" viewBox="0 0 100 130" aria-hidden="true">
+        <g fill="none" stroke="#120a07" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+          <ellipse cx="50" cy="12" rx="9" ry="7"/>
+          <path d="M44 20h12M46 20v8h8v-8"/>
+          <circle cx="50" cy="78" r="46" stroke-width="4"/>
+          <circle cx="50" cy="78" r="38" stroke-width="5" stroke-dasharray="2.2 17.7"
+                  stroke-dashoffset="1.1" transform="rotate(-90 50 78)"/>
+          <circle cx="50" cy="96" r="12" stroke-width="2"/>
+          <path d="M50 78L36 52M50 78L66 70" stroke-width="3.5"/>
+        </g>
+        <circle cx="50" cy="78" r="3" fill="#120a07"/>
+      </svg>
+
+      <nav class="menu" aria-label="Opciones">
+        <button class="menu-item sel" type="button" data-action="resume">Continuar</button>
+        <button class="menu-item" type="button" data-action="controls">Controles</button>
+        <button class="menu-item" type="button" data-action="credits">Créditos</button>
+        <button class="menu-item" type="button" data-action="home">Volver a inicio</button>
+      </nav>
+
+      <!-- Panel: Controles -->
+      <section class="pane" id="paneControls" hidden>
+        <h2>Controles</h2>
+        <table class="keys">
+          <tbody>
+            <tr><td><kbd>W</kbd> / <kbd>↑</kbd></td><td>Avanzar</td></tr>
+            <tr><td><kbd>S</kbd> / <kbd>↓</kbd></td><td>Retroceder</td></tr>
+            <tr><td><kbd>A</kbd> / <kbd>←</kbd></td><td>Moverse a la izquierda</td></tr>
+            <tr><td><kbd>D</kbd> / <kbd>→</kbd></td><td>Moverse a la derecha</td></tr>
+            <tr><td>Dos teclas (ej. <kbd>W</kbd> + <kbd>D</kbd>)</td><td>Moverse en diagonal</td></tr>
+            <tr><td><kbd>Shift</kbd> + movimiento</td><td>Correr</td></tr>
+            <tr><td><kbd>Espacio</kbd></td><td>Saltar</td></tr>
+            <tr><td>Ratón</td><td>Mover la cámara</td></tr>
+            <tr><td>Rueda del ratón</td><td>Acercar / alejar</td></tr>
+            <tr><td><kbd>Clic der.</kbd> (mantener) / <kbd>F</kbd></td><td>Apuntar</td></tr>
+            <tr><td><kbd>Clic izq.</kbd> / <kbd>Enter</kbd></td><td>Disparar</td></tr>
+            <tr><td><kbd>Q</kbd> / <kbd>E</kbd></td><td>Girar la cámara 90°</td></tr>
+            <tr><td><kbd>M</kbd></td><td>Música sí / no</td></tr>
+            <tr><td><kbd>R</kbd></td><td>Reiniciar objetos</td></tr>
+            <tr><td><kbd>Esc</kbd></td><td>Pausa</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Panel: Créditos (edita los textos entre corchetes) -->
+      <section class="pane" id="paneCredits" hidden>
+        <h2>Créditos</h2>
+        <dl class="credits">
+          <dt>Actividad</dt><dd>Control de escenarios 3D integrales</dd>
+          <dt>Materia</dt><dd>Graficación</dd>
+          <dt>Profesor</dt><dd>Luis Alejandro Santana Valadez</dd>
+          <dt>Equipo</dt>
+          <dd>
+            <ul>
+              <li><span>Pablo Ernesto Butanda López</span><span>N.º control: 23200987</span></li>
+              <li><span>Mario Alberto Silva López</span><span>N.º control: 23200900</span></li>
+            </ul>
+          </dd>
+        </dl>
+      </section>
+
+      <div class="hints">
+        <span>Seleccionar <i>↵</i></span>
+        <span>Atrás <i>Esc</i></span>
+      </div>
+    </div>
+  </section>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
